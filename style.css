@@ -1,0 +1,13 @@
+body { font-family: sans-serif; background: #111; color: #eee; text-align: center; margin: 0; padding: 1rem; }
+canvas { max-width: 100%; background: #222; border: 4px solid #777; border-radius: 8px; }
+.help { color: #aaa; font-size: .9rem; }
+#status { font-size: 1.2rem; min-height: 1.5em; }
+dialog { background: #222; color: #eee; border: 2px solid gold; border-radius: 8px; width: min(90vw, 460px); text-align: left; }
+dialog::backdrop { background: #000a; }
+pre { background: #000; color: #8f8; padding: .8rem; overflow-x: auto; }
+input { width: 100%; box-sizing: border-box; padding: .5rem; font-size: 1rem; background: #fff; color: #000; }
+#keys { display: flex; flex-wrap: wrap; gap: 3px; margin-top: .5rem; }
+#keys button { min-width: 2rem; padding: .35rem; font-size: 1rem; cursor: pointer; }
+#msg { min-height: 1.4em; }
+.row { display: flex; gap: .5rem; }
+.row button { flex: 1; padding: .5rem; cursor: pointer; }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>코드 방 탈출</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>🔐 코드 방 탈출</h1>
+<p id="status"></p>
+<canvas id="map"></canvas>
+<p class="help">방향키 / WASD로 이동 · 🖥️ 단말기에 닿으면 코드 문제 출제 · 모두 풀고 🚪 출구까지! 👹 몬스터를 조심하세요.</p>
+
+<dialog id="puzzle">
+  <h2 id="title"></h2>
+  <p id="question"></p>
+  <pre id="code"></pre>
+  <input id="answer" type="text" autocomplete="off" autofocus placeholder="정답 입력">
+  <div id="keys"></div>
+  <p id="msg"></p>
+  <div class="row">
+    <button id="submit" type="button">확인</button>
+    <button id="hint" type="button">힌트</button>
+    <button id="close" type="button">닫기</button>
+  </div>
+</dialog>
+
+<script src="game.js"></script>
+</body>
+</html>
