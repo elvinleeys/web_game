@@ -1,5 +1,5 @@
 const STAGES = 5;                         // 총 스테이지 수
-const MONSTER_EVERY_BY_STAGE = [5, 5, 4, 4, 3]; // 몬스터는 N틱(0.1초)마다 한 칸 이동 (작을수록 빠름)
+const MONSTER_EVERY_BY_STAGE = [8, 7, 7, 6, 6]; // 몬스터는 N틱(0.1초)마다 한 칸 이동 (작을수록 빠름)
 const COLS = 19, ROWS = 13, CELL = 36;    // 미로 크기는 홀수여야 한다
 const terminalsFor = stage => stage + 2;  // 스테이지당 풀어야 할 문제 수
 const timeFor = n => 60 + 15 * n;         // 제한 시간(초)
@@ -135,6 +135,7 @@ function newStage() {
   MAP = buildMap(n);
   player = find('S'); monster = find('M');
   solved = new Set(); time = timeFor(n); tick = 0; over = false;
+  showReview(false);
   msg = '';
   draw();
 }
@@ -158,7 +159,25 @@ function chase() {
   return monster;
 }
 
-function end(text) { over = true; msg = text + ' (R키: 처음부터 다시)'; $('puzzle').close(); draw(); }
+// 실패하면 아직 못 푼 문제의 정답을 보여줘서 복습할 수 있게 한다
+function showReview(show) {
+  const box = $('review');
+  box.replaceChildren();
+  box.style.display = show ? 'block' : 'none';
+  if (!show) return;
+  const h = document.createElement('b');
+  h.textContent = '📖 못 푼 문제의 정답';
+  box.append(h);
+  list.forEach((p, i) => {
+    if (solved.has(i)) return;
+    const d = document.createElement('div'), c = document.createElement('pre');
+    d.textContent = `${p.q}  →  정답: ${p.answers.join(' 또는 ')}`;
+    c.textContent = p.code;
+    box.append(d, c);
+  });
+}
+
+function end(text, win) { over = true; msg = text + ' (R키: 처음부터 다시)'; $('puzzle').close(); showReview(!win && solved.size < list.length); draw(); }
 
 function loop() {
   if (over) return; // 문제를 푸는 동안에도 시간·몬스터는 계속 움직인다
@@ -181,7 +200,7 @@ function move(dx, dy) {
   if (c === 'E') {
     if (solved.size < list.length) msg = `🔒 출구가 잠겨 있다. 단말기 ${list.length - solved.size}개를 더 풀어야 한다.`;
     else if (stage < STAGES) { stage++; newStage(); msg = `🎉 스테이지 ${stage - 1} 클리어!`; draw(); return; }
-    else return end('🏆 모든 스테이지 탈출 성공!');
+    else return end('🏆 모든 스테이지 탈출 성공!', true);
   } else msg = '';
   draw();
 }
